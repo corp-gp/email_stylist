@@ -1,0 +1,4 @@
+<wrapper>
+template: <%= 'erb_here' -%>
+<INCLUDE_COMPONENT path="spec/templates/component.html.inky" />
+</wrapper>

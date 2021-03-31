@@ -1,0 +1,15 @@
+/.idea/
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+*.gem
+spec/internal/log/test.log
+spec/spec/internal/log/test.log
+spec/tmp/db.sqlite3
+.tool-versions
+*.code-workspace
