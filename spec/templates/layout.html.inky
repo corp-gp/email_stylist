@@ -1,3 +1,9 @@
-<container>
-  <INCLUDE_BODY />
-</container>
+<!DOCTYPE html>
+<html>
+  <body>
+    <container>
+      <INCLUDE_BODY />
+    </container>
+  </body>
+</html>
+

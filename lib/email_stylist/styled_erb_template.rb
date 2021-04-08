@@ -14,7 +14,7 @@ module EmailStylist
         template_id = "#{layout}#{template}"
 
         @cache[template_id] = nil if defined?(Rails) && Rails.env.development?
-        
+
         @cache[template_id] ||=
           begin
             # без замены erb символов <% %> ломается Inky и Premailer

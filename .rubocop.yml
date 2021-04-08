@@ -1,3 +1,6 @@
 inherit_gem:
   rubocop-gp:
     - .rubocop.yml
+
+AllCops:
+  SuggestExtensions: false
