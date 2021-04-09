@@ -8,7 +8,7 @@ module EmailStylist
 
     class << self
 
-      def get(template:, layout: nil, pack: 'email.css', css_string: nil)
+      def get(template:, layout: nil, pack: 'email.css')
         @cache ||= {}
 
         template_id = "#{layout}#{template}"
@@ -23,7 +23,7 @@ module EmailStylist
 
             pm = Premailer.new(
               html,
-              css_string:         css_string || webpacker_css_string(pack),
+              css_string:         webpacker_css_string(pack),
               output_encoding:    'utf-8',
               with_html_string:   true,
               include_link_tags:  true,
@@ -34,8 +34,7 @@ module EmailStylist
             )
 
             html = pm.to_inline_css.gsub('1~~2~~3', '<%').gsub('9~~8~~7', '%>').gsub('&amp;&amp;', '&&').gsub('&gt;', '>').gsub('&lt;', '<').gsub('&amp;', '&')
-
-            CGI.unescape(html)
+            Tilt::ERBTemplate.new { CGI.unescape(html) }
           end
       end
 

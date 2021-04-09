@@ -6,10 +6,9 @@ RSpec.describe EmailStylist::StyledErbTemplate do
   describe '.get' do
     it 'template with layout' do
       html = described_class.get(
-        layout:     'spec/templates/layout.html.inky',
-        template:   'spec/templates/template.html.inky',
-        css_string: '.test-class { font-size: 10; }',
-      )
+        layout:   'spec/templates/layout.html.inky',
+        template: 'spec/templates/template.html.inky',
+      ).render
 
       expect(html).to eq(<<~HTML)
         <!DOCTYPE html>
@@ -17,8 +16,8 @@ RSpec.describe EmailStylist::StyledErbTemplate do
           <body>
             <table class="container" align="center"><tbody><tr><td>
         <table class="wrapper" align="center"><tr><td class="wrapper-inner">
-        template: <%= 'erb_here' -%>
-        <div class="test-class" style="font-size: 10;">
+        template: erb_here
+        <div class="test-class">
         component_content
         </div>
         </td></tr></table>
@@ -31,9 +30,19 @@ RSpec.describe EmailStylist::StyledErbTemplate do
     it 'template without layout' do
       html = described_class.get(
         template: 'spec/templates/template.html.inky',
-      )
+      ).render
 
-      expect(html).to include('component_content')
+      expect(html).to eq(<<~HTML)
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+        <html><body>
+        <table class="wrapper" align="center"><tr><td class="wrapper-inner">
+        template: erb_here
+        <div class="test-class">
+        component_content
+        </div>
+        </td></tr></table>
+        </body></html>
+      HTML
     end
   end
 end
