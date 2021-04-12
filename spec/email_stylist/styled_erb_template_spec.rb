@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 RSpec.describe EmailStylist::StyledErbTemplate do
-  describe '.get' do
+  describe '.render' do
     it 'template with layout' do
-      html = described_class.get(
-        layout:   'spec/templates/layout.html.inky',
-        template: 'spec/templates/template.html.inky',
-      ).render
+      html = described_class.render(
+        layout_path:   'spec/templates/layout.html.inky',
+        template_path: 'spec/templates/template.html.inky',
+      )
 
       expect(html).to eq(<<~HTML)
         <!DOCTYPE html>
@@ -28,9 +28,9 @@ RSpec.describe EmailStylist::StyledErbTemplate do
     end
 
     it 'template without layout' do
-      html = described_class.get(
-        template: 'spec/templates/template.html.inky',
-      ).render
+      html = described_class.render(
+        template_path: 'spec/templates/template.html.inky',
+      )
 
       expect(html).to eq(<<~HTML)
         <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">

@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'inky-rb'
-  spec.add_dependency 'premailer-rails'
+  spec.add_dependency 'premailer'
 end

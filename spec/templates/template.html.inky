@@ -1,4 +1,4 @@
 <wrapper>
-template: <%= 'erb_here' %>
+template: <%= 'erb_here' if 1 && 1 || (10 > 1) %>
 <INCLUDE_COMPONENT path="spec/templates/component.html.inky" />
 </wrapper>
