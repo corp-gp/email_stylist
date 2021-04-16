@@ -31,6 +31,7 @@ module EmailStylist
               html,
               css_string:         (webpacker_css_string(pack) if pack),
               with_html_string:   true,
+              output_encoding:    'utf-8',
               include_link_tags:  true,
               adapter:            :nokogiri,
               generate_text_part: false,
@@ -38,7 +39,7 @@ module EmailStylist
               remove_scripts:     false,
             )
 
-            html = pm.to_inline_css.force_encoding('ASCII-8BIT').gsub(/base64___(.+?)___base64/) { Base64.strict_decode64(Regexp.last_match(1)) }
+            html = pm.to_inline_css.gsub(/base64___(.+?)___base64/u) { Base64.strict_decode64(Regexp.last_match(1)) }
 
             if compiled_path
               write_compiled_erb(html, compiled_path)
@@ -55,7 +56,7 @@ module EmailStylist
         dir_name = File.dirname(compiled_path)
         FileUtils.mkdir_p(dir_name) unless File.exist?(dir_name)
 
-        File.open(compiled_path, 'wb') { |file| file.write(html) }
+        File.write(compiled_path, html)
       end
 
       private def compile(template, layout)
@@ -64,7 +65,7 @@ module EmailStylist
         if layout
           html = html.each_line.map { |s|
             if s.include?('INCLUDE_BODY')
-              File.open(template, 'rb', &:read)
+              File.read(template)
             else
               s
             end
@@ -77,7 +78,7 @@ module EmailStylist
       private def compile_components(html)
         html.each_line.map { |s|
           if (m = s.match(/INCLUDE_COMPONENT.*path="(.*)"/)) && m[1]
-            compile_components(File.open(m[1], 'rb', &:read))
+            compile_components(File.read(m[1]))
           else
             s
           end
