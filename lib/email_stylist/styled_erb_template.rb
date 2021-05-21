@@ -2,6 +2,7 @@
 
 require 'inky'
 require 'premailer'
+require 'net/http'
 
 module EmailStylist
   class StyledErbTemplate
@@ -91,7 +92,7 @@ module EmailStylist
 
         if Webpacker.dev_server.running?
           url = URI.join("#{Webpacker.dev_server.protocol}://#{Webpacker.dev_server.host_with_port}", uri)
-          Http.get(url).to_s
+          Net::HTTP.get(url)
         else
           Rails.public_path.join(uri.delete_prefix('/')).read
         end
