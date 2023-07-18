@@ -15,12 +15,12 @@ RSpec.describe EmailStylist::StyledErbTemplate do
         <html>
           <body>
             <table class="container" align="center"><tbody><tr><td>
-        <table class="wrapper" align="center"><tr><td class="wrapper-inner">
+        <table class="wrapper" align="center"><tbody><tr><td class="wrapper-inner">
         template: erb_here
         <div class="test-class">
         component_content
         </div>
-        </td></tr></table>
+        </td></tr></tbody></table>
             </td></tr></tbody></table>
           </body>
         </html>
@@ -35,12 +35,12 @@ RSpec.describe EmailStylist::StyledErbTemplate do
       expect(html).to eq(<<~HTML)
         <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
         <html><body>
-        <table class="wrapper" align="center"><tr><td class="wrapper-inner">
+        <table class="wrapper" align="center"><tbody><tr><td class="wrapper-inner">
         template: erb_here
         <div class="test-class">
         component_content
         </div>
-        </td></tr></table>
+        </td></tr></tbody></table>
         </body></html>
       HTML
     end
