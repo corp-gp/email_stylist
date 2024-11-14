@@ -11,7 +11,7 @@ module EmailStylist
       template_path:,
       layout_path: nil,
       compiled_path: nil,
-      pack: nil,
+      css_string: nil,
       disable_caching: false,
       view_context: nil
     )
@@ -28,7 +28,7 @@ module EmailStylist
 
           pm = Premailer.new(
             html,
-            css_string:         (css_string(pack) if pack),
+            css_string:         css_string,
             with_html_string:   true,
             include_link_tags:  true,
             adapter:            :nokogiri,
@@ -83,22 +83,6 @@ module EmailStylist
             s
           end
         }.join
-      end
-
-      private def css_string(pack)
-        pack += '.css' unless pack.end_with?('.css')
-
-        uri =
-          if ViteRuby.instance.dev_server_running?
-            ViteRuby.instance.builder.build
-            manifest = ViteRuby.instance.manifest
-            entry = manifest.send(:resolve_virtual_entry, pack)
-            manifest.send(:manifest)[entry].fetch('file')
-          else
-            ViteRuby.instance.manifest.path_for(pack)
-          end
-
-        Rails.public_path.join(uri.delete_prefix('/')).read
       end
 
     end
